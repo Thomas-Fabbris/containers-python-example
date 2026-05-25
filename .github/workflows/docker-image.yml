@@ -6,16 +6,17 @@ on:
   pull_request:
     branches: ["main"]
   workflow_dispatch:
-  
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag containers-example:$(date +%s)
+      - name: Checkout repository
+        uses: actions/checkout@v4
       
-      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag containers-example:${{ github.sha }}
+      
       - name: Run the Docker image
-        run: docker run containers-example:$(date +%s)
+        run: docker run containers-example:${{ github.sha }}

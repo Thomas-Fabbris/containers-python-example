@@ -18,4 +18,4 @@ COPY ./test2.jpg .
 ENV PYTHONPATH=/app
 
 # Define the command to run the script
-ENTRYPOINT ["python", "/app/ascii_image_converter.py", "--file", "$@", "--cols", "200"]
+ENTRYPOINT ["python", "/app/ascii_image_converter.py", "--cols", "200", "--file"]

@@ -16,10 +16,10 @@ jobs:
         run: docker build . --file Dockerfile --tag containers-example:${{ github.sha }}
 
       - name: Run the Docker image
-        run: docker run containers-example:${{ github.sha }} test2.jpg
+        run: docker run --name containers-example containers-example:${{ github.sha }} test2.jpg
         
       - name: Upload Github artifact
-        run: docker cp ascii-container:/app/out.txt ./out.txt
+        run: docker cp containers-example:/app/out.txt ./out.txt
       - uses: actions/upload-artifact@v4
         with:
           name: ascii-art-output

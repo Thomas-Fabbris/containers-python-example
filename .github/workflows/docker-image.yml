@@ -10,12 +10,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag containers-example:${{ github.sha }}
-
       - uses: actions/checkout@v4
-      - name: Build the Docker image
+
+      - name: Run the Docker image
         run: docker run containers-example:${{ github.sha }} test2.jpg
+        
+      - name: Upload Github artifact
+        run: docker cp ascii-container:/app/out.txt ./out.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ascii-art-output
+          path: ./out.txt

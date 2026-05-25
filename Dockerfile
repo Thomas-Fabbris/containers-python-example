@@ -2,16 +2,20 @@
 FROM python:3.9-slim
 
 # Set the workdir
-WORKDIR 
+WORKDIR /app
 
 # Copy the requirements
-COPY 
+COPY ./requirements.txt .
 
 # Install the required packages (pip)
-RUN 
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the Python script
-COPY 
+COPY ./ascii_image_converter.py .
+COPY ./test2.jpg .
+
+# Define environmental variables
+ENV PYTHONPATH=/app
 
 # Define the command to run the script
-ENTRYPOINT 
+ENTRYPOINT ["python", "/app/ascii_image_converter.py", "--file", "$@", "--cols", "200"]
